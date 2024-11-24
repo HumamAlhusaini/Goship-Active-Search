@@ -1,0 +1,5 @@
+.vscode/
+.env
+*_templ.go
+*_templ.txt
+bin/

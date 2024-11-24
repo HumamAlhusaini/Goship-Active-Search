@@ -1,0 +1,48 @@
+package components
+
+import (
+	"fmt"
+	"github.com/haatos/active-search-example/internal/model"
+)
+
+templ ActiveSearchInput(id, url, targetSelector string) {
+	<div class="w-full flex space-x-2 items-center">
+		<div class="w-full max-w-xs">
+			@Form(
+				templ.Attributes{
+					"id":           id,
+					"hx-get":       url,
+					"hx-target":    targetSelector,
+					"hx-swap":      "innerHTML",
+					"hx-trigger":   "keyup from:input[name=search] delay:500ms, search",
+					"hx-indicator": fmt.Sprintf("#%s", id),
+				},
+			) {
+				@Input(
+					model.Input{
+						Icon:        searchIcon(),
+						Name:        "search",
+						Type:        "search",
+						Placeholder: "Filter table...",
+						Class:       "input-sm input-bordered",
+					},
+				)
+			}
+		</div>
+		<div class="flex justify-center items-center">
+			<span id={ id } class="htmx-indicator loading loading-spinner"></span>
+		</div>
+	</div>
+}
+
+templ searchIcon() {
+	<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+		<path
+			class="stroke-base-content/60"
+			d="M15.7955 15.8111L21 21M18 10.5C18 14.6421 14.6421 18 10.5 18C6.35786 18 3 14.6421 3 10.5C3 6.35786 6.35786 3 10.5 3C14.6421 3 18 6.35786 18 10.5Z"
+			stroke-width="2"
+			stroke-linecap="round"
+			stroke-linejoin="round"
+		></path>
+	</svg>
+}
