@@ -1,4 +1,4 @@
-module github.com/haatos/active-search-example
+module github.com/HumamAlhusaini/Goship-Active-Search
 
 go 1.23.3
 

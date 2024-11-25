@@ -2,10 +2,9 @@ package pages
 
 import (
 	"fmt"
-	"github.com/haatos/goshipit/internal"
-	"github.com/haatos/goshipit/internal/model"
-	"github.com/haatos/goshipit/internal/views/components"
-	"github.com/haatos/goshipit/internal/views/examples"
+	"github.com/HumamAlhusaini/Goship-Active-Search/internal/model"
+	"github.com/HumamAlhusaini/Goship-Active-Search/internal/views/components"
+	"github.com/HumamAlhusaini/Goship-Active-Search/internal/views/examples"
 	"time"
 )
 
@@ -115,7 +114,7 @@ templ SideNavLayout(head templ.Component) {
 									Label: "GitHub",
 									Icon:  examples.GithubIcon(),
 									Attrs: templ.Attributes{
-										"href": "https://github.com/haatos/goshipit",
+										"href": "https://github.com/HumamAlhusaini/Goship-Active-Search",
 									},
 								},
 								{
@@ -179,7 +178,7 @@ templ SideNavLayout(head templ.Component) {
 							Label: "GitHub",
 							Icon:  examples.GithubIcon(),
 							Attrs: templ.Attributes{
-								"href": "https://github.com/haatos/goshipit",
+								"href": "https://github.com/HumamAlhusaini/Goship-Active-Search",
 							},
 						},
 					},
@@ -293,50 +292,3 @@ templ drawerSide(anchors []model.Anchor) {
 	</div>
 }
 
-type ComponentSearchItem struct {
-	Category string
-	Name     string
-}
-
-templ ComponentSearchListItems(cs []ComponentSearchItem) {
-	for i := range cs {
-		<div name="search-list-item" class="m-2 px-2 py-1 bg-base-100 rounded-box cursor-pointer">
-			<a
-				name="component-search-anchor"
-				href={ templ.SafeURL(fmt.Sprintf("/components/%s/%s", cs[i].Category, cs[i].Name)) }
-			>
-				<p class="text-xs text-base-content/75">
-					{ internal.SnakeCaseToCapitalized(cs[i].Category) }
-				</p>
-				<p class="font-bold">
-					{ internal.SnakeCaseToCapitalized(cs[i].Name) }
-				</p>
-			</a>
-		</div>
-	}
-}
-
-templ ComponentAnchors(keys []string, m model.ComponentCodeMap) {
-	<ul class="menu">
-		for _, k := range keys {
-			<li>
-				<h4 class="menu-title">{ internal.SnakeCaseToCapitalized(k) }</h4>
-				<ul>
-					for _, c := range m[k] {
-						<li>
-							<a
-								name="hx-anchor"
-								hx-get={ fmt.Sprintf("/components/%s/%s", k, c.Name) }
-								hx-target="main"
-								hx-swap="innerHTML"
-								hx-push-url="true"
-							>
-								{ c.Label }
-							</a>
-						</li>
-					}
-				</ul>
-			</li>
-		}
-	</ul>
-}

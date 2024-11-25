@@ -7,7 +7,7 @@ import (
 	"strings"
 	"unicode"
 
-	"github.com/haatos/goshipit/internal/views/components"
+	"github.com/HumamAlhusaini/Goship-Active-Search/internal/views/components"
 	"github.com/labstack/echo/v4"
 )
 
