@@ -1,0 +1,13 @@
+// feedback
+// https://daisyui.com/components/toast
+package components
+
+import "github.com/haatos/goshipit/internal/model"
+
+templ Toast(toast model.Toast) {
+	<div name={ toast.Name } class={ "toast", toast.ToastClass }>
+		<div class={ "alert", toast.AlertClass }>
+			{ children... }
+		</div>
+	</div>
+}

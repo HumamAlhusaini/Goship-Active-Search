@@ -2,46 +2,22 @@ package examples
 
 import (
 	"fmt"
-	"github.com/haatos/active-search-example/internal/views/components"
+	"github.com/haatos/goshipit/internal/views/components"
 )
 
+// example
 templ ActiveSearchExampleTable() {
-	<html>
-		<head>
-			<style>
-        .htmx-indicator {
-            opacity: 0;
-            transition: opacity 500ms ease-in;
-        }
-
-        .htmx-request .htmx-indicator {
-            opacity: 1
-        }
-
-        .htmx-request.htmx-indicator {
-            opacity: 1
-        }
-    </style>
-			<script src="https://unpkg.com/htmx.org@2.0.3"></script>
-			<link href="https://cdn.jsdelivr.net/npm/daisyui@4.12.14/dist/full.min.css" rel="stylesheet" type="text/css"/>
-			<script src="https://cdn.tailwindcss.com"></script>
-		</head>
-		<body>
-			<main>
-				<div class="h-[600px]">
-					@ActiveSearchExample(
-						"active-search-example-table",
-						[]templ.Component{
-							components.PlainText("First name"),
-							components.PlainText("Last name"),
-							components.PlainText("Email"),
-						},
-						activeSearchTableDataComponents(),
-					)
-				</div>
-			</main>
-		</body>
-	</html>
+	<div class="h-[600px]">
+		@ActiveSearchExample(
+			"active-search-example-table",
+			[]templ.Component{
+				components.PlainText("First name"),
+				components.PlainText("Last name"),
+				components.PlainText("Email"),
+			},
+			activeSearchTableDataComponents(),
+		)
+	</div>
 }
 
 templ ActiveSearchExample(id string, headers []templ.Component, rows []templ.Component) {

@@ -1,0 +1,41 @@
+// data_input
+// https://daisyui.com/components/textarea
+package components
+
+import (
+	"fmt"
+	"github.com/haatos/goshipit/internal/model"
+)
+
+templ Textarea(textarea model.Textarea) {
+	<label class="form-control">
+		if textarea.Label != "" {
+			<div class="label">
+				<span class="label-text">{ textarea.Label }</span>
+			</div>
+		}
+		<textarea
+			{ textarea.Attrs... }
+			if textarea.ID != "" {
+				id={ textarea.ID }
+			}
+			name={ textarea.Name }
+			placeholder={ textarea.Placeholder }
+			class={
+				"textarea",
+				textarea.Class,
+				templ.KV("textarea-error", textarea.Err != ""),
+			}
+			if textarea.Rows > 0 {
+				rows={ fmt.Sprintf("%d", textarea.Rows) }
+			} else {
+				rows="3"
+			}
+		>
+			{ textarea.Value }
+		</textarea>
+		<div class="label h-6 !p-0">
+			<span class="label-text-alt text-error">{ textarea.Err }</span>
+		</div>
+	</label>
+}

@@ -1,0 +1,24 @@
+// data_display
+// https://daisyui.com/components/stat
+package components
+
+import "github.com/haatos/goshipit/internal/model"
+
+templ Stats() {
+	<div class="stats stats-horizontal shadow">
+		{ children... }
+	</div>
+}
+
+templ Stat(stat model.Stat) {
+	<div class="stat">
+		<div class="stat-title">{ stat.Title }</div>
+		<div class="stat-value">{ stat.Value }</div>
+		if stat.Description != "" {
+			<div class="stat-desc">{ stat.Description }</div>
+		}
+		<div class="stat-actions">
+			{ children... }
+		</div>
+	</div>
+}

@@ -1,0 +1,22 @@
+// data_display
+// https://daisyui.com/components/avatar
+package components
+
+import "github.com/haatos/goshipit/internal/model"
+
+templ Avatar(a model.Avatar) {
+	<div class={ "avatar", a.AvatarClass }>
+		<div class={ a.ContainerClass }>
+			<img src={ a.Source }/>
+			if a.Placeholder != "" {
+				<span class={ a.PlaceholderClass }>{ a.Placeholder }</span>
+			}
+		</div>
+	</div>
+}
+
+templ AvatarGroup(class string) {
+	<div class={ "avatar-group rtl:space-x-reverse", class }>
+		{ children... }
+	</div>
+}

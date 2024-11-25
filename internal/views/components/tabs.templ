@@ -1,0 +1,25 @@
+// navigation
+// https://daisyui.com/components/tab
+package components
+
+import "github.com/haatos/goshipit/internal/model"
+
+templ Tabs(t model.Tabs) {
+	<div role="tablist" class={ "tabs", t.Class }>
+		for i, tab := range t.Tabs {
+			<input
+				type="radio"
+				name={ t.Name }
+				role="tab"
+				class="tab"
+				aria-label={ tab.Label }
+				if i == 0 {
+					checked="checked"
+				}
+			/>
+			<div class={ "tab-content", t.ContentClass }>
+				@tab.Content
+			</div>
+		}
+	</div>
+}

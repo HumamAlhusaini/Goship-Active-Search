@@ -1,0 +1,101 @@
+package examples
+
+import (
+	"fmt"
+	"github.com/haatos/goshipit/internal/views/components"
+)
+
+// example
+templ BasicModal() {
+	<div class="flex justify-center items-center py-8">
+		@components.Modal("my_modal", "Click me") {
+			<h3 class="text-3xl">Modal title</h3>
+			<p>Modal content goes here</p>
+		}
+	</div>
+}
+
+// example
+templ MultipleModals() {
+	<div class="flex justify-center items-center py-8">
+		<div class="grid grid-cols-3 gap-4">
+			for i := range 3 {
+				@components.Modal(fmt.Sprintf("my_modal_%d", i), "Click me") {
+					<h3 class="text-3xl">Modal title { fmt.Sprintf("%d", i) }</h3>
+					<p>Modal content { fmt.Sprintf("%d", i) }</p>
+				}
+			}
+		</div>
+	</div>
+}
+
+// example
+templ ModalWithAction() {
+	<div class="flex justify-center items-center py-8">
+		@components.Modal("my_modal_actions", "Click me") {
+			<h3 class="text-3xl">Modal title</h3>
+			<p>Modal content goes here</p>
+			<div class="modal-action">
+				<button class="btn" onclick="my_modal_actions.close()">Close</button>
+			</div>
+		}
+	</div>
+}
+
+// example
+templ ModalConfirmDelete() {
+	<div class="flex justify-center items-center py-8">
+		<div class="grid grid-cols-3 gap-4">
+			for i := range 6 {
+				<div name="modal-confirm-example">
+					@components.Modal(fmt.Sprintf("modal_confirm_%d", i), modalConfirmDeleteButton(i, templ.Attributes{"onclick": fmt.Sprintf("modal_confirm_%d.showModal()", i)})) {
+						<div class="space-y-8">
+							<div class="grid grid-cols-8 gap-2">
+								<div class="flex justify-center items-center">
+									<svg
+										class="col-span-1 h-8 w-8"
+										viewBox="0 0 24 24"
+										fill="none"
+										xmlns="http://www.w3.org/2000/svg"
+									><path class="fill-error" fill-rule="evenodd" clip-rule="evenodd" d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10zm-1.5-5.009c0-.867.659-1.491 1.491-1.491.85 0 1.509.624 1.509 1.491 0 .867-.659 1.509-1.509 1.509-.832 0-1.491-.642-1.491-1.509zM11.172 6a.5.5 0 0 0-.499.522l.306 7a.5.5 0 0 0 .5.478h1.043a.5.5 0 0 0 .5-.478l.305-7a.5.5 0 0 0-.5-.522h-1.655z"></path></svg>
+								</div>
+								<p class="col-span-7">
+									Are you sure you want to delete { fmt.Sprintf("%d", i) } ?
+								</p>
+							</div>
+							<div class="flex justify-between items-center">
+								<button
+									id="modal-confirm-example-delete-button"
+									class="btn btn-sm btn-error"
+									hx-delete={ fmt.Sprintf("/modal-confirm?value=%d", i) }
+									hx-target="closest div[name=modal-confirm-example]"
+									hx-swap="outerHTML"
+								>
+									Delete
+								</button>
+								<button class="btn" { templ.Attributes{"onclick": fmt.Sprintf("modal_confirm_%d.close()", i)}... }>
+									Cancel
+								</button>
+							</div>
+							<script>
+								((modal) => {
+									document.addEventListener("htmx:afterRequest", (evt) => {
+										if (evt.detail.elt.id === "modal-confirm-example-delete-button" && evt.detail.successful) {
+											modal.close()
+										}
+									})
+								})(document.currentScript.closest("dialog.modal"))
+							</script>
+						</div>
+					}
+				</div>
+			}
+		</div>
+	</div>
+}
+
+templ modalConfirmDeleteButton(i int, attrs templ.Attributes) {
+	<button { attrs... } class="btn">
+		Click to delete { fmt.Sprintf("%d", i) }
+	</button>
+}

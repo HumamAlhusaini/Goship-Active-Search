@@ -1,0 +1,21 @@
+// data_input
+// https://daisyui.com/components/radio
+package components
+
+import "github.com/haatos/goshipit/internal/model"
+
+templ Radio(r model.Radio) {
+	for l, v := range r.Values {
+		<div class="form-control">
+			<label class="label cursor-pointer">
+				<span class="label-text">{ l }</span>
+				<input
+					type="radio"
+					name={ r.Name }
+					value={ v }
+					class={ "radio", r.Class }
+				/>
+			</label>
+		</div>
+	}
+}

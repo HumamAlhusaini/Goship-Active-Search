@@ -1,0 +1,20 @@
+// data_display
+// https://daisyui.com/components/collapse
+package components
+
+import "github.com/haatos/goshipit/internal/model"
+
+templ Collapse(c model.Collapse) {
+	<div
+		tabindex="0"
+		class={ "collapse", c.Class }
+	>
+		<input type="checkbox"/>
+		<div class={ "collapse-title", c.TitleClass }>
+			{ c.Title }
+		</div>
+		<div class={ "collapse-content", c.ContentClass }>
+			{ children... }
+		</div>
+	</div>
+}
